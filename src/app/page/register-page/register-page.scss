@@ -1,0 +1,127 @@
+// Временно копируем переменные и миксины прямо сюда для работы
+// Позже настроим правильный импорт
+
+// Переменные
+$bg-dark: rgba(0, 0, 0, 0.6);
+$bg-input: rgba(255, 255, 255, 0.05);
+$bg-input-focus: rgba(255, 255, 255, 0.1);
+$border-color: rgba(255, 255, 255, 0.1);
+$border-input: rgba(255, 255, 255, 0.2);
+$text-white: white;
+$text-placeholder: rgba(255, 255, 255, 0.4);
+$text-label: rgba(255, 255, 255, 0.8);
+$error-color: #ff4444;
+$border-radius-form: 24px;
+$border-radius-input: 12px;
+$padding-form: 40px;
+$padding-input: 12px 16px;
+$gap-form: 20px;
+$blur: blur(15px);
+$shadow-form: 0 20px 40px rgba(0, 0, 0, 0.4);
+
+// Миксины
+@mixin glass-form {
+  background: $bg-dark;
+  backdrop-filter: $blur;
+  -webkit-backdrop-filter: $blur;
+  padding: $padding-form;
+  border-radius: $border-radius-form;
+  border: 1px solid $border-color;
+  box-shadow: $shadow-form;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  min-height: 350px;
+  gap: $gap-form;
+  color: $text-white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+@mixin form-input {
+  background: $bg-input;
+  border: 1px solid $border-input;
+  border-radius: $border-radius-input;
+  padding: $padding-input;
+  color: $text-white;
+  font-size: 16px;
+  transition: all 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: black;
+    background: $bg-input-focus;
+  }
+
+  &::placeholder {
+    color: $text-placeholder;
+  }
+}
+
+@mixin form-button {
+  background: black;
+  color: $text-white;
+  border: none;
+  padding: 14px;
+  border-radius: $border-radius-input;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s ease;
+
+  &:hover {
+    background: white;
+    box-shadow: 0 5px 15px rgba(0, 136, 204, 0.4);
+    color: black;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #444;
+  }
+}
+
+
+.register-container {
+  width: 100%;
+  height: 100vh;
+  background: url('/backgroudregister.jpg') no-repeat center center / cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding-right: 450px;
+}
+
+.form-register {
+  @include glass-form;
+}
+
+.form-username,
+.form-password {
+  @include form-input;
+}
+
+.btnsubmit {
+  @include form-button;
+  width: 100%;
+  
+}
+
+.signup-link a {
+    @include form-button;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    text-decoration: none;
+}
+.signup-link p {
+    display: flex;
+    justify-content: center;
+}

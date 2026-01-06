@@ -1,0 +1,78 @@
+<div class="register-container">
+    <form class="form-register"
+    [formGroup]="registerForm"
+    (ngSubmit)="onSubmit()"
+    >
+      <label class="telegram-label" for="username-input">Username</label>
+      <input
+        id="username-input"
+        class="form-username"
+        type="text"
+        placeholder="Введите username"
+        formControlName="username"
+      >
+        <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched"
+        class="error-message"
+        >
+        <span *ngIf="registerForm.get('username')?.errors?.['required']">
+            Введите Username
+        </span>
+        <span *ngIf="registerForm.get('username')?.errors?.['minlength']">
+            Введите минимум 3 символа
+        </span>
+        </div>
+      <label class="telegram-label" for="email-input">Email</label>
+      <input
+        id="email-input"
+        class="form-username"
+        formControlName="email"
+        type="email"
+        placeholder="Введите email"
+      >
+      <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+      class="error-message"
+      >
+        <span *ngIf="registerForm.get('email')?.errors?.['required']">
+            Введите Email
+        </span>
+        <span *ngIf="registerForm.get('email')?.errors?.['email']">
+            Нужен валидный email
+        </span>
+      </div>
+      
+      <label class="telegram-label" for="password-input">Password</label>
+      <input
+        id="password-input"
+        class="form-password"
+        type="password"
+        placeholder="Введите пароль"
+        formControlName="password"
+      >
+      <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+      class="error-message"
+      >
+        <span *ngIf="registerForm.get('password')?.errors?.['required']">
+            Введите пароль
+        </span>
+        <span *ngIf="registerForm.get('password')?.errors?.['minlength']">
+            Минимум 8 символов
+        </span>
+      </div>
+
+
+      <div>
+        <button type="submit"
+         class="btnsubmit"
+         [disabled]="isLoading || !registerForm.valid"
+         > {{isLoading ? 'Загрузка...' : 'Зарегистрироваться'}}
+
+        </button>
+        
+
+      </div>
+      <div class="signup-link">
+        <p>Уже есть аккаунт?</p>
+        <a routerLink="/login">Войти</a>
+      </div>
+    </form>
+  </div>

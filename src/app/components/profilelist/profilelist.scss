@@ -1,0 +1,31 @@
+@import '../../../styles/_forms.scss';
+@import '../../../styles/_variables.scss';
+
+
+.profile-container {
+  @include glass-form;
+}
+
+.profile-ava {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid black;
+  align-content: center;
+
+}
+
+.header-profile {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+}
+
+.avatar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+

@@ -1,0 +1,22 @@
+<div class="profile-container">
+  <div *ngIf="isLoading">
+    <p>Загрузка</p>
+  </div>
+
+
+  <div *ngIf="!isLoading && user" class="header-profile">
+    <h1> Профиль {{user.username}}</h1>
+
+    <div class="avatar-container">
+    <img [src]="user.avatar" alt="avatar" class="profile-ava">
+    </div>
+
+    <p>email: {{user.email}}</p>
+    <p>Description: {{user.bio || 'нет описания'}}</p>
+  </div>
+
+    <div *ngIf="!isLoading && !user">
+      <p>USER NOT FOUND</p>
+    </div>
+
+</div>

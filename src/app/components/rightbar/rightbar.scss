@@ -1,0 +1,92 @@
+:host {
+  display: block;
+  width: 350px;
+  height: 90vh;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 40px;
+  margin-bottom: 40px;
+  margin-right: 40px;
+  border-radius: 60px;
+  overflow: hidden; // Убираем скроллбар
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.rightbar-header {
+  margin-bottom: 0px;
+  
+}
+
+.avatarka {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  margin-bottom: 20px;
+  background: none;
+  border: 1px solid white;
+  .ava {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid black;
+  }
+  
+  .nick {
+    
+    font-size: 1.2rem;
+    color: #fff;
+    display: flex;
+    
+   
+  }
+}
+
+.rightbar-menu {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  padding: 40px;
+  justify-content: center;
+  
+  nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .nav-item {
+    display: block;
+    text-align: center;
+    width: 100%;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 12px 20px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: black;
+    }
+    
+    &.active {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+    
+    span {
+      font-size: 20px;
+      color: white;
+    }
+  }
+}

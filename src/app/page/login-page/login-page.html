@@ -1,0 +1,57 @@
+<div class="login-container">
+  <form class="form-login"
+  [formGroup]="loginForm"
+  (ngSubmit)="onSubmit()"
+  >
+    <label class="telegram-label" for="username-input">Email</label>
+    <input
+      id="username-input"
+      class="form-username"
+      formControlName="email"
+      type="email"
+      placeholder="Введите email"
+      required
+    >
+    <div
+      *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+      class="error-message"
+      >
+      <span *ngIf="loginForm.get('email')?.errors?.['required']"
+        >Введите Email </span>
+      
+      <span *ngIf="loginForm.get('email')?.errors?.['email']">
+        Валидный нужен брат
+      </span>
+        
+    </div>
+  
+    <label class="telegram-label" for="password-input">Password</label>
+    <input
+    id="password-input"
+    class="form-password"
+    formControlName="password"
+    type="password"
+    placeholder="Введите пароль"
+    required
+    >
+    <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+    class="error-message"
+    >
+    <span *ngIf="loginForm.get('password')?.errors?.['required']">
+      Введите Пароль
+    </span>
+
+    <span *ngIf="loginForm.get('password')?.errors?.['minlength']">
+      Минимум 6 символов
+    </span>
+    </div>
+
+    <div>
+      <button type="submit"
+       class="btnsubmit"
+       [disabled]="isLoading || !loginForm.valid"
+       >{{isLoading ? 'Вход...' : 'Войти'}}
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,48 @@
+<aside class="sidebar-container">
+  <div>
+    <span class="trial-label">HELIGRAM</span>
+  </div>
+
+  <nav class="menu-link">
+    <a routerLink="/main/feed" routerLinkActive="active" class="nav-item">
+      <span>HOME</span>
+    </a>
+    <a routerLink="/feed" routerLinkActive="active" class="nav-item">
+      <span>SEARCH</span>
+    </a>
+    <a routerLink="/feed" routerLinkActive="active" class="nav-item">
+      <span>MESSAGE</span>
+    </a>
+    <a routerLink="/feed" routerLinkActive="active" class="nav-item">
+      <span>COMMUNITY</span>
+    </a>
+    <a routerLink="/feed" routerLinkActive="active" class="nav-item">
+      <span>MUSIC</span>
+    </a>
+    <a routerLink="/feed" routerLinkActive="active" class="nav-item">
+      <span>PAYMENTS</span>
+    </a>
+    <a routerLink="/feed" routerLinkActive="active" class="nav-item">
+      <span>HELIPREM</span>
+    </a>
+    <button id="logout-button" (click)="logout()" class="nav-item">
+      <span id="logout-item">Logout</span>
+    </button>
+  </nav>
+</aside>
+
+<!-- Модальное окно подтверждения выхода -->
+<div *ngIf="showLogoutModal" class="modal-overlay" (click)="cancelLogout()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h2 class="modal-title">Выход из аккаунта</h2>
+    <p class="modal-message">Вы уверены, что хотите выйти?</p>
+    <div class="modal-buttons">
+      <button class="modal-btn modal-btn-cancel" (click)="cancelLogout()">
+        Отмена
+      </button>
+      <button class="modal-btn modal-btn-confirm" (click)="confirmLogout()">
+        Выйти
+      </button>
+    </div>
+  </div>
+</div>

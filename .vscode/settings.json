@@ -1,0 +1,13 @@
+{
+  "editor.autoClosingBrackets": "never",
+  "editor.autoClosingQuotes": "never",
+  "[scss]": {
+    "editor.autoClosingBrackets": "always",
+    "editor.autoClosingQuotes": "always"
+  },
+  "[css]": {
+    "editor.autoClosingBrackets": "always",
+    "editor.autoClosingQuotes": "always"
+  }
+}
+

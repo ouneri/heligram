@@ -1,0 +1,88 @@
+@import 'variables'; // SCSS автоматически найдёт _variables.scss в той же папке
+
+// Миксин для формы (glassmorphism эффект)
+@mixin glass-form {
+  background: $bg-dark;
+  backdrop-filter: $blur;
+  -webkit-backdrop-filter: $blur;
+  padding: $padding-form;
+  border-radius: $border-radius-form;
+  border: 1px solid $border-color;
+  box-shadow: $shadow-form;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  min-height: 350px;
+  gap: $gap-form;
+  color: $text-white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+// Миксин для input полей
+@mixin form-input {
+  background: $bg-input;
+  border: 1px solid $border-input;
+  border-radius: $border-radius-input;
+  padding: $padding-input;
+  color: $text-white;
+  font-size: 16px;
+  transition: all 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: black;
+    background: $bg-input-focus;
+  }
+
+  &::placeholder {
+    color: $text-placeholder;
+  }
+}
+
+// Миксин для кнопки
+@mixin form-button {
+  background: black;
+  color: $text-white;
+  border: none;
+  padding: 14px;
+  border-radius: $border-radius-input;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s ease;
+
+  &:hover {
+    background: white;
+    box-shadow: 0 5px 15px rgba(0, 136, 204, 0.4);
+    color: black;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #444;
+  }
+}
+
+.form-label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: $text-label;
+}
+
+.error-message {
+  color: $error-color;
+  font-size: 0.875rem;
+  margin-top: 5px;
+  min-height: 20px;
+  display: block;
+}
+

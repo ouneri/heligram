@@ -4,8 +4,9 @@
   display: block;
   width: 350px;
   height: 90vh;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-right: 1px solid rgba(255, 255, 255, 0.1);
   margin-top: 40px;
   margin-bottom: 40px;
@@ -14,27 +15,42 @@
   overflow: hidden;
   padding: 20px;
   box-sizing: border-box;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
 }
 
 .trial-label {
   display: flex;
   justify-content: center;
-  font-size: 32px;
+  font-size: 36px;
   font-weight: 700;
+  color: white;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
 
+  &:hover {
+    transform: scale(1.05);
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  }
 }
 
-.menu-link{
+.menu-link {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 20px;
-  padding: 40px;
+  gap: 12px;
+  padding: 32px 20px;
   justify-content: center;
 }
 
 .menu-link a {
   text-decoration: none;
-
 }
 
 .nav-item {
@@ -42,40 +58,101 @@
   text-align: center;
   width: 100%;
   align-items: center;
-  text-decoration: none;   /* Убираем синее подчеркивание */
+  text-decoration: none;
   color: white;
-  font-size: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 10px;
-  padding: 12px 20px;
-  margin-bottom: 10px;
-  transition: all 0.3s ease;
+  font-size: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  padding: 14px 22px;
+  margin-bottom: 0;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(255, 255, 255, 0.03);
+  position: relative;
+  overflow: hidden;
+  font-weight: 500;
+  letter-spacing: 0.5px;
 
-  &:hover {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
     background: rgba(255, 255, 255, 0.1);
-    border-color: black;
+    transform: translate(-50%, -50%);
+    transition: width 0.5s ease, height 0.5s ease;
   }
 
-}
+  &:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 
-.nav-item span {
-  font-size: 20px;
-  color: white;
+    &::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    span {
+      color: rgba(255, 255, 255, 1);
+    }
+  }
+
+  &.active {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 60%;
+      background: white;
+      border-radius: 0 4px 4px 0;
+    }
+  }
+
+  span {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.9);
+    transition: color 0.3s ease;
+    position: relative;
+    z-index: 1;
+  }
 }
 
 #logout-item {
-  color: red;
-  font-size: 20px;
+  color: rgba(255, 77, 77, 0.9);
+  font-size: 18px;
+  transition: color 0.3s ease;
 }
 
 #logout-button {
-  background: none;
+  background: rgba(255, 77, 77, 0.1);
+  border-color: rgba(255, 77, 77, 0.3);
+
+  &:hover {
+    background: rgba(255, 77, 77, 0.2);
+    border-color: rgba(255, 77, 77, 0.5);
+
+    #logout-item {
+      color: rgba(255, 77, 77, 1);
+    }
+  }
+
+  &.active {
+    background: rgba(255, 77, 77, 0.25);
+    border-color: rgba(255, 77, 77, 0.6);
+  }
 }
 
-
-// ... существующие стили ...
-
-// Модальное окно
 .modal-overlay {
   position: fixed;
   right: 0;
@@ -84,73 +161,121 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(5px);
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
   margin: 0;
   padding: 0;
+  animation: fadeInModal 0.3s ease-out;
 }
 
-.modal-content {
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 24px;
-  padding: 40px;
-  max-width: 400px;
-  width: 90%;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-  animation: modalFadeIn 0.3s ease;
-  position: relative;
-  margin: auto;
-  transform: translateY(-50% -50%);
-  z-index: 1001;
-}
-
-@keyframes modalFadeIn {
+@keyframes fadeInModal {
   from {
     opacity: 0;
-    transform: scale(0.9);
   }
   to {
     opacity: 1;
-    transform: scale(1);
+  }
+}
+
+.modal-content {
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 28px;
+  padding: 40px;
+  max-width: 450px;
+  width: 90%;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6);
+  animation: slideUpModal 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  margin: auto;
+  z-index: 1001;
+}
+
+@keyframes slideUpModal {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
 .modal-title {
   color: white;
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 15px;
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 16px;
   text-align: center;
+  letter-spacing: -0.5px;
 }
 
 .modal-message {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.85);
   font-size: 16px;
-  margin-bottom: 30px;
+  margin-bottom: 32px;
   text-align: center;
+  line-height: 1.6;
 }
 
 .modal-buttons {
   display: flex;
-  gap: 15px;
+  gap: 14px;
   justify-content: center;
 }
 
 .modal-btn {
   @include form-button;
+  flex: 1;
+  max-width: 150px;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
+  }
+
+  &:hover::before {
+    width: 200px;
+    height: 200px;
+  }
 }
 
 .modal-btn-cancel {
   @include form-button;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+  }
 }
 
 .modal-btn-confirm {
   @include form-button;
-  border: 1px solid $error-color;
+  background: rgba(255, 77, 77, 0.9);
+  border: 1px solid rgba(255, 77, 77, 1);
+
+  &:hover {
+    background: rgba(255, 77, 77, 1);
+    box-shadow: 0 6px 20px rgba(255, 77, 77, 0.4);
+  }
 }

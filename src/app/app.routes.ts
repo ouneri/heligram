@@ -5,6 +5,7 @@ import {MainLayout} from './page/main-layout/main-layout';
 import { authGuard } from './guards/auth-guard';
 import { RegisterPage } from './page/register-page/register-page';
 import { Profilelist } from './components/profilelist/profilelist';
+import { Search } from './components/search/search';
 
 
 export const routes: Routes = [
@@ -19,6 +20,7 @@ export const routes: Routes = [
     {path: 'feed', component: Feed},
     {path: '', redirectTo: 'feed', pathMatch: 'full'},
     {path: 'profile/:id', component: Profilelist},
+    {path: 'search', component: Search},
   ]
  },
 ];

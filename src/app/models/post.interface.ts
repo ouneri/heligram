@@ -1,6 +1,6 @@
 import { User } from "./user.interface";
-
-
+import { Comment } from "./comment.interface";
+import { Like } from "./like.interface";
 
 export interface Post {
     id: User['id'];
@@ -10,5 +10,9 @@ export interface Post {
     description: string;
     image: string;
     createdAt: string;
-    
+    likes?: Like[];
+    comments?: Comment[];
+    likesCount?: number;
+    commentsCount?: number;
+    isLiked?: boolean; // для текущего пользователя
 }

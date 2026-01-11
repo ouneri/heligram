@@ -1,22 +1,81 @@
 <div class="profile-container">
-  <div *ngIf="isLoading">
-    <p>Загрузка</p>
+  <!-- Состояние загрузки -->
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Загрузка профиля...</p>
   </div>
 
-
-  <div *ngIf="!isLoading && user" class="header-profile">
-    <h1> Профиль {{user.username}}</h1>
-
-    <div class="avatar-container">
-    <img [src]="user.avatar" alt="avatar" class="profile-ava">
+  <div *ngIf="!isLoading && user" class="profile-content">
+    <!-- Header с аватаром -->
+    <div class="profile-header">
+      <div class="avatar-wrapper">
+        <img [src]="user.avatar" alt="avatar" class="profile-avatar">
+        <div class="avatar-border"></div>
+      </div>
+      <div class="profile-info-header">
+        <h1 class="profile-username">{{ user.username }}</h1>
+        <button 
+          *ngIf="!isOwnProfile()"
+          class="follow-btn"
+          (click)="toggleFollow()"
+          [disabled]="isFollowLoading"
+          [class.following]="isFollowing"
+        >
+          {{ isFollowing ? '✓ Подписки' : '+ Подписаться' }}
+        </button>
+        <!-- Редактирование профиля будет добавлено позже -->
+      </div>
     </div>
 
-    <p>email: {{user.email}}</p>
-    <p>Description: {{user.bio || 'нет описания'}}</p>
+    <div class="profile-stats">
+      <div class="stat-item">
+        <span class="stat-number">{{ postsCount }}</span>
+        <span class="stat-label">Постов</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">{{ followersCount }}</span>
+        <span class="stat-label">Подписчиков</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">{{ followingCount }}</span>
+        <span class="stat-label">Подписок</span>
+      </div>
+    </div>
+
+    <div class="profile-info">
+      <div class="info-item">
+        <span class="info-icon">📧</span>
+        <span class="info-text">{{ user.email }}</span>
+      </div>
+      <div class="info-item" *ngIf="user.bio">
+        <span class="info-icon">📝</span>
+        <span class="info-text">{{ user.bio }}</span>
+      </div>
+    </div>
+
+    <!-- Посты пользователя -->
+    <div class="user-posts-section" *ngIf="userPosts.length > 0">
+      <h2 class="posts-section-title">Посты пользователя</h2>
+      <div class="posts-grid">
+        <div 
+          class="post-thumbnail" 
+          *ngFor="let post of userPosts"
+        >
+          <img [src]="post.image" [alt]="post.description">
+          <div class="post-overlay">
+            <span class="post-likes">❤️ {{ post.likesCount || 0 }}</span>
+            <span class="post-comments">💬 {{ post.commentsCount || 0 }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="no-posts" *ngIf="!isLoading && userPosts.length === 0">
+      <p>У пользователя пока нет постов</p>
+    </div>
   </div>
 
-    <div *ngIf="!isLoading && !user">
-      <p>USER NOT FOUND</p>
-    </div>
-
+  <div *ngIf="!isLoading && !user" class="error-state">
+    <p>❌ Пользователь не найден</p>
+  </div>
 </div>

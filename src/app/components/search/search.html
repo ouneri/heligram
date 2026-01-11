@@ -1,0 +1,81 @@
+<div class="search-container">
+  <div class="search-header">
+    <h1 class="search-title">Поиск</h1>
+    <div class="search-input-wrapper">
+      <input
+        type="text"
+        class="search-input"
+        [(ngModel)]="searchQuery"
+        (input)="onSearchChange()"
+        placeholder="Поиск пользователей и постов..."
+      />
+      <span class="search-icon">🔍</span>
+    </div>
+  </div>
+
+  <div class="search-tabs">
+    <button
+      class="tab-btn"
+      [class.active]="activeTab === 'users'"
+      (click)="setActiveTab('users')"
+    >
+      Пользователи
+    </button>
+    <button
+      class="tab-btn"
+      [class.active]="activeTab === 'posts'"
+      (click)="setActiveTab('posts')"
+    >
+      Посты
+    </button>
+  </div>
+
+  <div class="search-results">
+    <div *ngIf="isLoading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Поиск...</p>
+    </div>
+
+    <div *ngIf="!isLoading && searchQuery.trim() && activeTab === 'users'">
+      <div *ngIf="users.length === 0" class="no-results">
+        <p>Пользователи не найдены</p>
+      </div>
+      <div *ngIf="users.length > 0" class="users-list">
+        <div
+          class="user-item"
+          *ngFor="let user of users"
+          (click)="navigateToProfile(user.id)"
+        >
+          <img [src]="user.avatar" [alt]="user.username" class="user-avatar" />
+          <div class="user-info">
+            <div class="user-username">{{ user.username }}</div>
+            <div class="user-email">{{ user.email }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!isLoading && searchQuery.trim() && activeTab === 'posts'">
+      <div *ngIf="posts.length === 0" class="no-results">
+        <p>Посты не найдены</p>
+      </div>
+      <div *ngIf="posts.length > 0" class="posts-list">
+        <div
+          class="post-item"
+          *ngFor="let post of posts"
+          (click)="navigateToPost(post.id)"
+        >
+          <img [src]="post.image" [alt]="post.description" class="post-image" />
+          <div class="post-info">
+            <div class="post-username">{{ post.username }}</div>
+            <div class="post-description">{{ post.description }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!isLoading && !searchQuery.trim()" class="empty-state">
+      <p>Введите запрос для поиска</p>
+    </div>
+  </div>
+</div>

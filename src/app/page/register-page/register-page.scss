@@ -1,7 +1,3 @@
-// Временно копируем переменные и миксины прямо сюда для работы
-// Позже настроим правильный импорт
-
-// Переменные
 $bg-dark: rgba(0, 0, 0, 0.6);
 $bg-input: rgba(255, 255, 255, 0.05);
 $bg-input-focus: rgba(255, 255, 255, 0.1);
@@ -19,7 +15,6 @@ $gap-form: 20px;
 $blur: blur(15px);
 $shadow-form: 0 20px 40px rgba(0, 0, 0, 0.4);
 
-// Миксины
 @mixin glass-form {
   background: $bg-dark;
   backdrop-filter: $blur;

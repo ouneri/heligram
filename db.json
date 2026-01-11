@@ -53,6 +53,15 @@
       "avatar": "/avatarka.jpg",
       "bio": "Fitness coach 💪 | Healthy lifestyle",
       "createdAt": "2024-01-20T00:00:00.000Z"
+    },
+    {
+      "id": "0b25",
+      "username": "arlearlearle",
+      "email": "nem.ne@internet.ru",
+      "password": "123123123gg",
+      "avatar": "/avatarka.jpg",
+      "bio": "",
+      "createdAt": "2026-01-07T18:07:31.802Z"
     }
   ],
   "posts": [
@@ -61,7 +70,7 @@
       "userId": "1",
       "username": "testuser",
       "description": "Утро начинается с кофе ☕ Какой ваш любимый способ начать день?",
-      "image": "/test.jpg",
+      "image": "/image.jpg",
       "createdAt": "2024-12-20T08:30:00.000Z",
       "avatar": "/avatarka.jpg"
     },
@@ -70,7 +79,7 @@
       "userId": "2",
       "username": "user2",
       "description": "Новый проект в работе! Скоро покажу результат 🚀 #coding #webdev",
-      "image": "/test2.jpg",
+      "image": "/IMG_0411.jpg",
       "createdAt": "2024-12-20T10:15:00.000Z",
       "avatar": "/avatarka.jpg"
     },
@@ -79,7 +88,7 @@
       "userId": "44c5",
       "username": "arle",
       "description": "Закат сегодня просто невероятный 🌅 Природа - лучший художник",
-      "image": "/test2.jpg",
+      "image": "/wallpaperflare.com_wallpaper.jpg",
       "createdAt": "2024-12-19T18:45:00.000Z",
       "avatar": "/avatarka.jpg"
     },
@@ -88,7 +97,7 @@
       "userId": "3",
       "username": "sarah_photo",
       "description": "Новая серия фотографий из Японии 🇯🇵 Токио никогда не перестает удивлять! Каждый уголок этого города - произведение искусства. #tokyo #photography #travel",
-      "image": "/test.jpg",
+      "image": "/image.jpg",
       "createdAt": "2024-12-20T14:20:00.000Z",
       "avatar": "/avatarka.jpg"
     },
@@ -97,7 +106,7 @@
       "userId": "4",
       "username": "tech_guru",
       "description": "Только что протестировал новую фичу в Angular 17+ 🔥 Signals - это просто магия! Кто еще пробовал? #angular #webdev #frontend",
-      "image": "/test2.jpg",
+      "image": "/IMG_0411.jpg",
       "createdAt": "2024-12-20T12:00:00.000Z",
       "avatar": "/avatarka.jpg"
     },
@@ -106,7 +115,7 @@
       "userId": "5",
       "username": "fitness_life",
       "description": "Утренняя пробежка завершена! 5 км за 28 минут 💪 Помните: каждый шаг приближает вас к цели! #fitness #running #motivation",
-      "image": "/test.jpg",
+      "image": "/wallpaperflare.com_wallpaper.jpg",
       "createdAt": "2024-12-20T07:00:00.000Z",
       "avatar": "/avatarka.jpg"
     },
@@ -115,7 +124,7 @@
       "userId": "1",
       "username": "testuser",
       "description": "Выходные = время для новых экспериментов! Сегодня изучаю новую библиотеку для анимаций. Что вы изучаете на выходных? 🎨",
-      "image": "/test2.jpg",
+      "image": "/image.jpg",
       "createdAt": "2024-12-19T16:30:00.000Z",
       "avatar": "/avatarka.jpg"
     },
@@ -124,7 +133,7 @@
       "userId": "3",
       "username": "sarah_photo",
       "description": "Портретная съемка в студии 📸 Работа с естественным светом - это всегда вызов, но результат того стоит! #portrait #photography #studio",
-      "image": "/test.jpg",
+      "image": "/IMG_0411.jpg",
       "createdAt": "2024-12-19T20:15:00.000Z",
       "avatar": "/avatarka.jpg"
     },
@@ -133,7 +142,7 @@
       "userId": "4",
       "username": "tech_guru",
       "description": "Поделюсь лайфхаком: используйте TypeScript strict mode с самого начала проекта. Это сэкономит кучу времени в будущем! 🛠️ #typescript #coding",
-      "image": "/test2.jpg",
+      "image": "/wallpaperflare.com_wallpaper.jpg",
       "createdAt": "2024-12-19T11:45:00.000Z",
       "avatar": "/avatarka.jpg"
     },
@@ -142,7 +151,7 @@
       "userId": "5",
       "username": "fitness_life",
       "description": "Новый рецепт протеинового смузи! 🥤 Банан + шпинат + протеин = идеальный завтрак после тренировки. Рецепт в комментариях! #healthy #smoothie",
-      "image": "/test.jpg",
+      "image": "/image.jpg",
       "createdAt": "2024-12-19T09:20:00.000Z",
       "avatar": "/avatarka.jpg"
     },
@@ -151,7 +160,7 @@
       "userId": "2",
       "username": "user2",
       "description": "Завершил еще один проект! Теперь можно немного отдохнуть и подумать о следующем вызове 🎯 Что планируете на следующую неделю?",
-      "image": "/test2.jpg",
+      "image": "/IMG_0411.jpg",
       "createdAt": "2024-12-18T15:00:00.000Z",
       "avatar": "/avatarka.jpg"
     },
@@ -160,10 +169,13 @@
       "userId": "44c5",
       "username": "arle",
       "description": "Музыка + программирование = идеальная комбинация 🎵 Какую музыку слушаете во время кодинга? Мои топ-3: Lo-Fi, Ambient, Electronic",
-      "image": "/test.jpg",
+      "image": "/wallpaperflare.com_wallpaper.jpg",
       "createdAt": "2024-12-18T22:30:00.000Z",
       "avatar": "/avatarka.jpg"
     }
   ],
+  "likes": [],
+  "comments": [],
+  "follows": [],
   "tokens": []
 }

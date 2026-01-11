@@ -22,7 +22,6 @@ export class Sidebar {
     private authService: Authservices) {}
 
   logout(): void {
-    // Показываем модальное окно вместо прямого выхода
     this.showLogoutModal = true;
   }
 

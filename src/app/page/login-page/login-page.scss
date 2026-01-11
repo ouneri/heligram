@@ -17,14 +17,13 @@ html, body {
 }
 
 .form-login {
-  /* Эффект стекла */
-  background: rgba(0, 0, 0, 0.6); /* Темный полупрозрачный фон */
-  backdrop-filter: blur(15px);   /* Размытие фона за формой */
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
 
   padding: 40px;
   border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.1); /* Тонкая светлая рамка */
+  border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 
   display: flex;
@@ -59,7 +58,7 @@ html, body {
 
   &:focus {
     outline: none;
-    border-color: black; /* Цвет Telegram */
+    border-color: black;
     background: rgba(255, 255, 255, 0.1);
   }
 
@@ -104,4 +103,3 @@ html, body {
   display: block;
 
 }
-

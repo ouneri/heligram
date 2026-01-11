@@ -1,25 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from '../../services/post-service';
 import { CommonModule } from '@angular/common';
-import { Post as PostComponent } from '../post/post';  // Компонент для HTML
-import { Post } from '../../models/post.interface';    // Интерфейс для типизации
+import { Post as PostComponent } from '../post/post';
+import { Post } from '../../models/post.interface';
 
 @Component({
   selector: 'app-feed',
-  imports: [CommonModule, PostComponent],  // Компонент для использования в HTML
+  imports: [CommonModule, PostComponent],
   templateUrl: './feed.html',
   styleUrl: './feed.scss',
   standalone: true
 })
 export class Feed implements OnInit {
 
-  posts: Post[] = [];  // Массив постов (тип - интерфейс Post)
+  posts: Post[] = [];
 
   constructor(
     private postService: PostService,
   ) {}
 
   ngOnInit(): void {
+    this.loadPosts();
+  }
+
+  loadPosts(): void {
     this.postService.getPosts().subscribe({
       next: (posts) => {
         this.posts = posts;

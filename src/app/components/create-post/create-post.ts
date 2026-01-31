@@ -47,6 +47,7 @@ export class CreatePost {
       next: () => {
         this.notificationService.success('Пост успешно создан!');
         this.closeModal();
+        this.postService.refreshPosts(); // лента обновится без перезагрузки страницы
         this.postCreated.emit();
         this.isSubmitting = false;
       },

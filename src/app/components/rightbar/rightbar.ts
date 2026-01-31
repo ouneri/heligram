@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import { CreatePost } from '../create-post/create-post';
+import {Authservices} from '../../services/authservices';
+import {User} from '../../models/user.interface';
 
 @Component({
   selector: 'app-rightbar',
@@ -13,10 +15,18 @@ import { CreatePost } from '../create-post/create-post';
   styleUrl: './rightbar.scss',
   standalone: true
 })
+
+
 export class Rightbar {
-  onPostCreated(): void {
-    setTimeout(() => {
-      window.location.reload();
-    }, 500);
+
+  public currentUser: User | null = null;
+  constructor(
+    private authservices:  Authservices,
+  ){
+    this.currentUser = this.authservices.getCurrentUser();
   }
+
+  onPostCreated(): void {
+  }
+
 }

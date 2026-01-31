@@ -50,16 +50,16 @@
 .rightbar-menu {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 20px;
-  padding: 40px;
+  gap: 12px;
+  padding: 32px 20px;
   justify-content: center;
-  
+
   nav {
     display: flex;
     flex-direction: column;
-    gap: 0;
+    gap: 12px;
   }
-  
+
   .nav-item {
     display: block;
     text-align: center;
@@ -67,26 +67,72 @@
     align-items: center;
     text-decoration: none;
     color: white;
-    font-size: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 10px;
-    padding: 12px 20px;
-    margin-bottom: 10px;
-    transition: all 0.3s ease;
-    
+    font-size: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    padding: 14px 22px;
+    margin-bottom: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(255, 255, 255, 0.03);
+    position: relative;
+    overflow: hidden;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      transform: translate(-50%, -50%);
+      transition: width 0.5s ease, height 0.5s ease;
+    }
+
     &:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: black;
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateX(4px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+      &::before {
+        width: 300px;
+        height: 300px;
+      }
+
+      span {
+        color: rgba(255, 255, 255, 1);
+      }
     }
-    
+
     &.active {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.15);
       border-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 4px;
+        height: 60%;
+        background: white;
+        border-radius: 0 4px 4px 0;
+      }
     }
-    
+
     span {
-      font-size: 20px;
-      color: white;
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.9);
+      transition: color 0.3s ease;
+      position: relative;
+      z-index: 1;
     }
   }
 }

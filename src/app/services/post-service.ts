@@ -3,7 +3,7 @@ import { Post } from '../models/post.interface';
 import { Comment } from '../models/comment.interface';
 import { Like } from '../models/like.interface';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import {Observable, of, Subject} from 'rxjs';
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { Authservices } from './authservices';
 
@@ -14,10 +14,20 @@ const API_URL = 'http://localhost:3000';
 })
 export class PostService {
 
+  private postRefresh$ = new Subject<void>();
+
   constructor(
     private http: HttpClient,
     private authService: Authservices
   ){}
+
+  refreshPosts(): void {
+    this.postRefresh$.next();
+  }
+
+  get onPostsRefresh$(): Observable<void> {
+    return this.postRefresh$.asObservable();
+  }
 
   getPosts(): Observable<Post[]> {
     const currentUser = this.authService.getCurrentUser();
@@ -35,6 +45,7 @@ export class PostService {
                   const postLikes = likes.filter(like => like.postId === post.id);
                   const postComments = comments.filter(comment => comment.postId === post.id);
                   const isLiked = userId ? postLikes.some(like => like.userId === userId) : false;
+
 
                   return {
                     ...post,
@@ -146,5 +157,5 @@ export class PostService {
       })
     );
   }
-  
+
 }

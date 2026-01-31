@@ -56,7 +56,7 @@
 
     <div class="comments-section" *ngIf="showComments">
       <div class="comments-list" *ngIf="post.comments && post.comments.length > 0">
-        <div class="comment-item" *ngFor="let comment of post.comments">
+        <div class="comment-item" *ngFor="let comment of post.comments; trackBy: trackByCommentId">
           <div class="comment-avatar">
             <img [src]="comment.avatar" alt="avatar" (error)="$event.target.src='/avatarka.jpg'">
           </div>

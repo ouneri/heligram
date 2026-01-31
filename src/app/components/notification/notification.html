@@ -1,6 +1,6 @@
 <div class="notification-container">
   <div 
-    *ngFor="let notification of notifications$ | async" 
+    *ngFor="let notification of notifications$ | async; trackBy: trackByNotificationId" 
     class="notification"
     [class.success]="notification.type === 'success'"
     [class.error]="notification.type === 'error'"

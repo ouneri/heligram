@@ -1,4 +1,6 @@
 <div class="profile-container">
+  <button class="back-btn" routerLink="/main/feed">← Назад</button>
+
   <!-- Состояние загрузки -->
   <div *ngIf="isLoading" class="loading-state">
     <div class="spinner"></div>
@@ -10,11 +12,11 @@
     <div class="profile-header">
       <div class="avatar-wrapper">
         <img [src]="user.avatar" alt="avatar" class="profile-avatar">
-        <div class="avatar-border"></div>
+
       </div>
       <div class="profile-info-header">
         <h1 class="profile-username">{{ user.username }}</h1>
-        <button 
+        <button
           *ngIf="!isOwnProfile()"
           class="follow-btn"
           (click)="toggleFollow()"
@@ -57,9 +59,9 @@
     <div class="user-posts-section" *ngIf="userPosts.length > 0">
       <h2 class="posts-section-title">Посты пользователя</h2>
       <div class="posts-grid">
-        <div 
-          class="post-thumbnail" 
-          *ngFor="let post of userPosts"
+        <div
+          class="post-thumbnail"
+          *ngFor="let post of userPosts; trackBy: trackByPostId"
         >
           <img [src]="post.image" [alt]="post.description">
           <div class="post-overlay">

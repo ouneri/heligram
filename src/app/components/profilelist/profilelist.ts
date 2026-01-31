@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {Authservices} from '../../services/authservices';
@@ -12,7 +12,7 @@ import {Follow} from '../../models/follow.interface';
 
 @Component({
   selector: 'app-profilelist',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './profilelist.html',
   styleUrl: './profilelist.scss',
   standalone: true
@@ -52,7 +52,7 @@ export class Profilelist implements OnInit {
 
     loadUser(): void {
       if (!this.userId) return;
-      
+
       this.isLoading = true;
       this.authService.getUserById(this.userId).subscribe({
         next: (user) => {
@@ -73,7 +73,7 @@ export class Profilelist implements OnInit {
 
     checkFollowStatus(): void {
       if (!this.userId || !this.currentUser) return;
-      
+
       if (this.userId === this.currentUser.id.toString()) {
         this.isFollowing = false; // Нельзя подписаться на себя
         return;
@@ -166,5 +166,10 @@ export class Profilelist implements OnInit {
 
     isOwnProfile(): boolean {
       return this.currentUser?.id.toString() === this.userId;
+    }
+
+    // 🎓 TrackBy функция для постов пользователя
+    trackByPostId(index: number, post: Post): string | number {
+      return post.id;
     }
 }

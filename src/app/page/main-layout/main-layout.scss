@@ -32,16 +32,16 @@
   z-index: 1;
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
-  
+
   &::-webkit-scrollbar {
     width: 8px;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 4px;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 4px;
@@ -61,16 +61,16 @@
   z-index: 1;
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
-  
+
   &::-webkit-scrollbar {
     width: 8px;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 4px;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 4px;
@@ -79,5 +79,25 @@
     &:hover {
       background: rgba(255, 255, 255, 0.3);
     }
+  }
+}
+
+.app-container.fullscreen {
+  grid-template-columns: 1fr;
+  overflow: visible;
+  
+  .main-content {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 20px;
+    justify-content: stretch;
+    align-items: stretch;
+    display: block;
+    overflow-x: visible;
+  }
+  
+  .right-panel {
+    display: none;
   }
 }

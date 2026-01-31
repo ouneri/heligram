@@ -19,4 +19,9 @@ export class Notification {
   removeNotification(id: string): void {
     this.notificationService.remove(id);
   }
+
+  // 🎓 TrackBy для уведомлений
+  trackByNotificationId(index: number, notification: any): string {
+    return notification.id;
+  }
 }

@@ -1,6 +1,6 @@
 <div class="create-post-wrapper">
   <button class="create-post-btn" (click)="openModal()">
-    <span>➕ Создать пост</span>
+    <span>CREATE POST</span>
   </button>
 
   <div *ngIf="showModal" class="modal-overlay" (click)="closeModal()">
@@ -54,9 +54,9 @@
         <button class="btn-cancel" (click)="closeModal()" [disabled]="isSubmitting">
           Отмена
         </button>
-        <button 
-          class="btn-submit" 
-          (click)="onSubmit()" 
+        <button
+          class="btn-submit"
+          (click)="onSubmit()"
           [disabled]="isSubmitting || !description.trim() || !imageUrl.trim()"
         >
           {{ isSubmitting ? 'Создание...' : 'Опубликовать' }}

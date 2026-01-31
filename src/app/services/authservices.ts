@@ -115,7 +115,7 @@ export class Authservices {
             username: data.username,
             email: data.email,
             password: data.password,
-            avatar: '/avatarka.jpg',
+            avatar: '/free-icon-profile-7710521.png',
             bio: '',
             createdAt: new Date().toISOString()
           };

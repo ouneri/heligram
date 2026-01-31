@@ -87,4 +87,13 @@ export class Search implements OnInit {
   navigateToPost(postId: string | number): void {
     this.router.navigate(['/main/feed']);
   }
+
+  // 🎓 TrackBy функции для оптимизации списков
+  trackByUserId(index: number, user: User): string | number {
+    return user.id;
+  }
+
+  trackByPostId(index: number, post: Post): string | number {
+    return post.id;
+  }
 }

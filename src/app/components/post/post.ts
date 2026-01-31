@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Post as PostData } from '../../models/post.interface';
@@ -11,11 +11,12 @@ import { Router, RouterLink } from '@angular/router';
   imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './post.html',
   styleUrl: './post.scss',
-  standalone: true
+  standalone: true,
+
 })
 export class Post implements OnInit {
   @Input() post!: PostData;
-  
+
   showComments = false;
   commentText = '';
   isLiking = false;
@@ -32,7 +33,7 @@ export class Post implements OnInit {
 
   toggleLike(): void {
     if (this.isLiking || !this.post) return;
-    
+
     this.isLiking = true;
     if (this.post.isLiked) {
       this.postService.unlikePost(this.post.id).subscribe({
@@ -101,7 +102,7 @@ export class Post implements OnInit {
     if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} мин назад`;
     if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} ч назад`;
     if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)} дн назад`;
-    
+
     return date.toLocaleDateString('ru-RU');
   }
 
@@ -110,12 +111,18 @@ export class Post implements OnInit {
     const fallbackImages = ['/image.jpg', '/IMG_0411.jpg', '/avatarka.jpg'];
     const currentSrc = img.src;
     const currentIndex = fallbackImages.findIndex(url => currentSrc.includes(url));
-    
+
     if (currentIndex < fallbackImages.length - 1) {
       img.src = fallbackImages[currentIndex + 1];
     } else {
       img.src = '/avatarka.jpg';
       img.style.opacity = '0.5';
     }
+  }
+
+  // 🎓 TrackBy для комментариев
+  // Используем комбинацию postId + userId + время как уникальный идентификатор
+  trackByCommentId(index: number, comment: any): string {
+    return `${comment.postId}-${comment.userId}-${comment.createdAt}`;
   }
 }

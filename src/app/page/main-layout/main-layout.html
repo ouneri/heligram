@@ -1,11 +1,13 @@
-<div class="app-container">
-  <app-sidebar></app-sidebar>
+<div class="app-container" [class.fullscreen]="ifProfilePage">
+  <app-sidebar *ngIf="!ifProfilePage"></app-sidebar>
 
   <main class="main-content">
-    <router-outlet></router-outlet> 
+    <router-outlet></router-outlet>
   </main>
 
   <aside class="right-panel">
-    <app-rightbar></app-rightbar>
+    <app-rightbar *ngIf="!ifProfilePage"></app-rightbar>
   </aside>
 </div>
+
+

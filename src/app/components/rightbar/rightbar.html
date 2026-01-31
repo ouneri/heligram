@@ -1,14 +1,14 @@
 <div class="rightbar">
   <div class="rightbar-header">
     <div class="avatarka">
-      <img src="/avatarka.jpg" alt="avatarka" class="ava">
-      <span class="nick">heli</span>
+      <img [src]="currentUser?.avatar || '/free-icon-profile-7710521.png'" alt="avatarka" class="ava">
+      <span class="nick">{{ currentUser?.username?? 'Гость' }}</span>
     </div>
 
     <div class="rightbar-menu">
       <nav>
         <app-create-post (postCreated)="onPostCreated()"></app-create-post>
-        <a routerLink="/main/feed" routerLinkActive="active" class="nav-item">
+        <a [routerLink]="['/main/profile', currentUser?.id]" routerLinkActive="active" class="nav-item">
           <span>Profile</span>
         </a>
         <a routerLink="/main/feed" routerLinkActive="active" class="nav-item">

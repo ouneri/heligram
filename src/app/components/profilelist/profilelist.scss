@@ -159,7 +159,7 @@
   text-align: center;
   letter-spacing: -0.5px;
 }
-
+.delete-post-btn,
 .follow-btn,
 .edit-btn {
   background: rgba(255, 255, 255, 0.95);
@@ -173,6 +173,8 @@
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   align-self: center;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+
+
 
   &:hover:not(:disabled) {
     background: white;
@@ -195,6 +197,7 @@
     }
   }
 }
+
 
 .profile-stats {
   display: grid;
@@ -228,6 +231,10 @@
   color: rgba(255, 255, 255, 0.6);
   text-transform: uppercase;
   letter-spacing: 1.5px;
+}
+
+.stat-item-clickable {
+  cursor: pointer;
 }
 
 .profile-info {
@@ -305,17 +312,23 @@
 
   .post-overlay {
     position: absolute;
+    display: flex;
+    flex-direction: column;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .post-overlay-center {
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 24px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
   }
 
   &:hover .post-overlay {
@@ -328,6 +341,13 @@
     font-size: 15px;
     font-weight: 600;
   }
+}
+
+.delete-post-btn {
+  margin-top: auto;
+  flex-shrink: 0;
+  margin-bottom: 10px;
+
 }
 
 .no-posts {
@@ -560,4 +580,65 @@
     background: rgba(255, 255, 255, 0.95);
     transform: translateY(-1px);
   }
+}
+
+/* Модалка списка подписчиков/подписок */
+.list-modal-content {
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.list-modal-body {
+  padding: 16px 24px 24px;
+  overflow-y: auto;
+  min-height: 120px;
+}
+
+.list-modal-loading {
+  padding: 40px 20px;
+}
+
+.list-modal-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 16px;
+}
+
+.list-modal-users {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.list-modal-user-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+.list-modal-user-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.list-modal-user-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
 }

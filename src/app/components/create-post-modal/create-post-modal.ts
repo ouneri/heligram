@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PostService } from '../../services/post-service';
@@ -20,7 +20,9 @@ export class CreatePostModal {
   constructor(
     public modalService: CreatePostModalService,
     private postService: PostService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private cdr: ChangeDetectorRef,
+    private ngZone: NgZone
   ) {}
 
   closeModal(): void {
@@ -60,7 +62,11 @@ export class CreatePostModal {
 
       reader.onload = (e: ProgressEvent<FileReader>) => {
         if (e.target?.result) {
-          this.imageUrl = e.target.result as string;
+          const dataUrl = e.target.result as string;
+          this.ngZone.run(() => {
+            this.imageUrl = dataUrl;
+            this.cdr.detectChanges();
+          });
         }
       };
 

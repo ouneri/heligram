@@ -4,8 +4,9 @@ import { Observable, of } from 'rxjs';
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { Follow } from '../models/follow.interface';
 import { Authservices } from './authservices';
+import { environment } from '../../environments/environment';
 
-const API_URL = 'http://localhost:3000';
+const API_URL = environment.apiUrl;
 
 @Injectable({
   providedIn: 'root'

@@ -1,14 +1,16 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router, RouterLink} from '@angular/router';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {Authservices} from '../../services/authservices';
-import {FollowService} from '../../services/follow.service';
-import {PostService} from '../../services/post-service';
-import {NotificationService} from '../../services/notification.service';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { forkJoin, of } from 'rxjs';
+import { switchMap, catchError } from 'rxjs/operators';
+import { Authservices } from '../../services/authservices';
+import { FollowService } from '../../services/follow.service';
+import { PostService } from '../../services/post-service';
+import { NotificationService } from '../../services/notification.service';
 import { User } from '../../models/user.interface';
 import { Post } from '../../models/post.interface';
-import {Follow} from '../../models/follow.interface';
+import { Follow } from '../../models/follow.interface';
 
 @Component({
   selector: 'app-profilelist',
@@ -33,6 +35,12 @@ export class Profilelist implements OnInit {
   editUsername: string = '';
   editBio: string = '';
   editAvatar: string = '';
+  isDeleting = false;
+  showModalFolowers = false;
+  showModalSubscribes = false;
+  listModalUsers: User[] = [];
+  listModalTitle = '';
+  listModalLoading = false;
 
 
   constructor(
@@ -55,6 +63,77 @@ export class Profilelist implements OnInit {
         this.loadUserStats();
         this.loadUserPosts();
       }
+    }
+
+    openModalFollowers(): void {
+      if (!this.userId) return;
+      this.listModalTitle = 'Подписчики';
+      this.listModalUsers = [];
+      this.listModalLoading = true;
+      this.showModalFolowers = true;
+      this.cdr.detectChanges();
+
+      this.followService.getFollowers(this.userId).pipe(
+        switchMap((follows) => {
+          const ids = follows.map((f) => f.followerId);
+          if (ids.length === 0) return of([]);
+          return forkJoin(ids.map((id) => this.authService.getUserById(String(id)))).pipe(
+            catchError(() => of([]))
+          );
+        })
+      ).subscribe({
+        next: (users) => {
+          this.listModalUsers = users;
+          this.listModalLoading = false;
+          this.cdr.detectChanges();
+        },
+        error: () => {
+          this.listModalLoading = false;
+          this.cdr.detectChanges();
+        }
+      });
+    }
+
+    openModalFollowing(): void {
+      if (!this.userId) return;
+      this.listModalTitle = 'Подписки';
+      this.listModalUsers = [];
+      this.listModalLoading = true;
+      this.showModalSubscribes = true;
+      this.cdr.detectChanges();
+
+      this.followService.getFollowing(this.userId).pipe(
+        switchMap((follows) => {
+          const ids = follows.map((f) => f.followingId);
+          if (ids.length === 0) return of([]);
+          return forkJoin(ids.map((id) => this.authService.getUserById(String(id)))).pipe(
+            catchError(() => of([]))
+          );
+        })
+      ).subscribe({
+        next: (users) => {
+          this.listModalUsers = users;
+          this.listModalLoading = false;
+          this.cdr.detectChanges();
+        },
+        error: () => {
+          this.listModalLoading = false;
+          this.cdr.detectChanges();
+        }
+      });
+    }
+
+    closeListModal(): void {
+      this.showModalFolowers = false;
+      this.showModalSubscribes = false;
+      this.listModalUsers = [];
+      this.listModalTitle = '';
+      this.cdr.detectChanges();
+    }
+
+    goToUserProfile(userId: string | number): void {
+      this.closeListModal();
+      this.router.navigate(['/main/profile', userId]);
     }
 
     loadUser(): void {
@@ -171,14 +250,46 @@ export class Profilelist implements OnInit {
       }
     }
 
+    DeletePostId(postId: string | number){
+      if(this.isDeleting){
+        return
+      }
+
+      if(!confirm('Удалить пост?')){
+        return
+      }
+      this.isDeleting = true
+      this.postService.deletePost(postId).subscribe({
+        next: () => {
+          this.loadUserPosts();
+          this.isDeleting = false;
+          this.notificationService.success('Пост удалён');
+        },
+        error: (error) => {
+          this.notificationService.error('Ошибка при удалении поста');
+          this.isDeleting = false
+        }
+      })
+
+    }
+
     isOwnProfile(): boolean {
       return this.currentUser?.id.toString() === this.userId;
     }
 
-    // 🎓 TrackBy функция для постов пользователя
     trackByPostId(index: number, post: Post): string | number {
       return post.id;
     }
+
+    trackByUserId(index: number, user: User): string | number {
+      return user.id;
+    }
+
+    navigateToPost(postId: string | number): void {
+      this.router.navigate(['/main/post', postId]);
+    }
+
+
 
     onOpenEditModal() {
       this.showEditModal = true;

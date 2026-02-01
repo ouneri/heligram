@@ -39,11 +39,11 @@
         <span class="stat-number">{{ postsCount }}</span>
         <span class="stat-label">Постов</span>
       </div>
-      <div class="stat-item">
+      <div class="stat-item stat-item-clickable" (click)="openModalFollowers()">
         <span class="stat-number">{{ followersCount }}</span>
         <span class="stat-label">Подписчиков</span>
       </div>
-      <div class="stat-item">
+      <div class="stat-item stat-item-clickable" (click)="openModalFollowing()">
         <span class="stat-number">{{ followingCount }}</span>
         <span class="stat-label">Подписок</span>
       </div>
@@ -67,11 +67,20 @@
         <div
           class="post-thumbnail"
           *ngFor="let post of userPosts; trackBy: trackByPostId"
+          (click)="navigateToPost(post.id)"
         >
           <img [src]="post.image" [alt]="post.description">
           <div class="post-overlay">
-            <span class="post-likes">❤️ {{ post.likesCount || 0 }}</span>
-            <span class="post-comments">💬 {{ post.commentsCount || 0 }}</span>
+            <div class="post-overlay-center">
+              <span class="post-likes">❤️ {{ post.likesCount || 0 }}</span>
+              <span class="post-comments">💬 {{ post.commentsCount || 0 }}</span>
+            </div>
+            <button
+              class="delete-post-btn"
+              *ngIf="isOwnProfile()"
+              (click)="DeletePostId(post.id); $event.stopPropagation()"
+              [disabled]="isDeleting"
+            >Удалить</button>
           </div>
         </div>
       </div>
@@ -140,6 +149,39 @@
         <button type="button" class="edit-btn-save" (click)="onSaveProfile()">
           Сохранить
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модалка списка подписчиков/подписок -->
+  <div
+    *ngIf="showModalFolowers || showModalSubscribes"
+    class="edit-modal-overlay list-modal-overlay"
+    (click)="closeListModal()"
+  >
+    <div class="edit-modal-content list-modal-content" (click)="$event.stopPropagation()">
+      <div class="edit-modal-header">
+        <h2 class="edit-modal-title">{{ listModalTitle }}</h2>
+        <button type="button" class="edit-modal-close" (click)="closeListModal()">×</button>
+      </div>
+      <div class="list-modal-body">
+        <div *ngIf="listModalLoading" class="loading-state list-modal-loading">
+          <div class="spinner"></div>
+          <p>Загрузка...</p>
+        </div>
+        <div *ngIf="!listModalLoading && listModalUsers.length === 0" class="list-modal-empty">
+          <p>Никого нет</p>
+        </div>
+        <div *ngIf="!listModalLoading && listModalUsers.length > 0" class="list-modal-users">
+          <div
+            *ngFor="let u of listModalUsers; trackBy: trackByUserId"
+            class="list-modal-user-item"
+            (click)="goToUserProfile(u.id)"
+          >
+            <img [src]="u.avatar" [alt]="u.username" class="list-modal-user-avatar" />
+            <span class="list-modal-user-name">{{ u.username }}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>

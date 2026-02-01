@@ -10,21 +10,24 @@
     <a routerLink="/main/search" routerLinkActive="active" class="nav-item">
       <span>SEARCH</span>
     </a>
-    <a routerLink="/main/feed" routerLinkActive="active" class="nav-item">
+    <a routerLink="/main/messages" routerLinkActive="active" class="nav-item">
       <span>MESSAGE</span>
     </a>
-    <a routerLink="/main/feed" routerLinkActive="active" class="nav-item">
+    <a routerLink="/main/community" routerLinkActive="active" class="nav-item">
       <span>COMMUNITY</span>
     </a>
-    <a routerLink="/main/feed" routerLinkActive="active" class="nav-item">
+    <a href="https://ouneri.github.io/music-platform/" target="_blank" rel="noopener noreferrer" class="nav-item">
       <span>MUSIC</span>
     </a>
-    <a routerLink="/main/feed" routerLinkActive="active" class="nav-item">
+    <a routerLink="/main/payments" routerLinkActive="active" class="nav-item">
       <span>PAYMENTS</span>
     </a>
-    <a routerLink="/main/feed" routerLinkActive="active" class="nav-item">
+    <a routerLink="/main/heliprem" routerLinkActive="active" class="nav-item">
       <span>HELIPREM</span>
     </a>
+    <button class="nav-item theme-toggle" (click)="toggleTheme()">
+      <span>{{ themeService.theme() === 'dark' ? '☀️ Светлая' : '🌙 Тёмная' }}</span>
+    </button>
     <button id="logout-button" (click)="logout()" class="nav-item">
       <span id="logout-item">Logout</span>
     </button>

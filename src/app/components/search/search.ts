@@ -1,23 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
-import { debounceTime, distinctUntilChanged, Subject, switchMap, of, forkJoin } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { debounceTime, distinctUntilChanged, Subject, switchMap, of } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { User } from '../../models/user.interface';
 import { Post } from '../../models/post.interface';
-
-const API_URL = 'http://localhost:3000';
+import { SearchService } from '../../services/search.service';
 
 @Component({
   selector: 'app-search',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './search.html',
-  styleUrl: './search.scss'
+  styleUrl: './search.scss',
 })
-export class Search implements OnInit {
+export class Search implements OnInit, AfterViewInit {
+  @ViewChild('searchInput') searchInputRef?: ElementRef<HTMLInputElement>;
+
   searchQuery = '';
   searchSubject = new Subject<string>();
   users: User[] = [];
@@ -26,54 +27,61 @@ export class Search implements OnInit {
   activeTab: 'users' | 'posts' = 'users';
 
   constructor(
-    private http: HttpClient,
-    private router: Router
+    private searchService: SearchService,
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private ngZone: NgZone
   ) {
-    this.searchSubject.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      switchMap(query => {
-        if (!query.trim()) {
-          return of({ users: [], posts: [] });
-        }
-        this.isLoading = true;
-        return this.performSearch(query);
-      })
-    ).subscribe({
-      next: (results) => {
-        this.users = results.users;
-        this.posts = results.posts;
-        this.isLoading = false;
-      },
-      error: () => {
-        this.isLoading = false;
-      }
-    });
+    this.searchSubject
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap((query) => {
+          if (!query.trim()) {
+            return of({ users: [], posts: [] });
+          }
+          this.ngZone.run(() => {
+            this.isLoading = true;
+            setTimeout(() => this.cdr.detectChanges(), 0);
+          });
+          return this.searchService.search(query).pipe(
+            finalize(() => {
+              this.ngZone.run(() => {
+                this.isLoading = false;
+                setTimeout(() => this.cdr.detectChanges(), 0);
+              });
+            })
+          );
+        }),
+        takeUntilDestroyed()
+      )
+      .subscribe((results) => {
+        this.ngZone.run(() => {
+          this.users = results.users;
+          this.posts = results.posts;
+          // Следующий тик, чтобы представление обновилось сразу без клика
+          setTimeout(() => this.cdr.detectChanges(), 0);
+        });
+      });
   }
 
   ngOnInit(): void {}
+
+  ngAfterViewInit(): void {
+    setTimeout(() => this.searchInputRef?.nativeElement?.focus(), 100);
+  }
 
   onSearchChange(): void {
     this.searchSubject.next(this.searchQuery);
   }
 
-  performSearch(query: string): Promise<{ users: User[], posts: Post[] }> {
-    return Promise.all([
-      this.http.get<User[]>(`${API_URL}/users?q=${query}`).toPromise().catch(() => this.http.get<User[]>(`${API_URL}/users`).toPromise()),
-      this.http.get<Post[]>(`${API_URL}/posts?q=${query}`).toPromise().catch(() => this.http.get<Post[]>(`${API_URL}/posts`).toPromise())
-    ]).then(([usersResult, postsResult]) => {
-      const users = (usersResult || []).filter(user => 
-        user.username.toLowerCase().includes(query.toLowerCase()) ||
-        user.email.toLowerCase().includes(query.toLowerCase())
-      );
-      const posts = (postsResult || []).filter(post =>
-        post.description.toLowerCase().includes(query.toLowerCase()) ||
-        post.username.toLowerCase().includes(post.username.toLowerCase())
-      );
-      return { users, posts };
-    }).catch(() => {
-      return { users: [], posts: [] };
-    });
+  clearSearch(): void {
+    this.searchQuery = '';
+    this.users = [];
+    this.posts = [];
+    this.searchSubject.next('');
+    this.cdr.detectChanges();
+    this.searchInputRef?.nativeElement?.focus();
   }
 
   setActiveTab(tab: 'users' | 'posts'): void {
@@ -85,15 +93,22 @@ export class Search implements OnInit {
   }
 
   navigateToPost(postId: string | number): void {
-    this.router.navigate(['/main/feed']);
+    this.router.navigate(['/main/post', postId]);
   }
 
-  // 🎓 TrackBy функции для оптимизации списков
-  trackByUserId(index: number, user: User): string | number {
+  get hasQuery(): boolean {
+    return this.searchQuery.trim().length > 0;
+  }
+
+  get hasNoResults(): boolean {
+    return this.hasQuery && !this.isLoading && this.users.length === 0 && this.posts.length === 0;
+  }
+
+  trackByUserId(_index: number, user: User): string | number {
     return user.id;
   }
 
-  trackByPostId(index: number, post: Post): string | number {
+  trackByPostId(_index: number, post: Post): string | number {
     return post.id;
   }
 }

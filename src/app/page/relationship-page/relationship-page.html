@@ -1,0 +1,67 @@
+<div class="relationship-container">
+  <button class="back-btn" routerLink="/main/feed">← Назад</button>
+
+  <h1 class="page-title">Связи</h1>
+
+  <div class="tabs">
+    <button
+      class="tab-btn"
+      [class.active]="activeTab === 'followers'"
+      (click)="setActiveTab('followers')"
+    >
+      Подписчики ({{ followers.length }})
+    </button>
+    <button
+      class="tab-btn"
+      [class.active]="activeTab === 'following'"
+      (click)="setActiveTab('following')"
+    >
+      Подписки ({{ following.length }})
+    </button>
+  </div>
+
+  <div class="content">
+    <div *ngIf="isLoading && activeTab === 'followers'" class="loading-state">
+      <div class="spinner"></div>
+      <p>Загрузка...</p>
+    </div>
+
+    <div *ngIf="!isLoading && activeTab === 'followers'">
+      <div *ngIf="followers.length === 0" class="empty-state">
+        <p>У вас пока нет подписчиков</p>
+      </div>
+      <div *ngIf="followers.length > 0" class="users-list">
+        <div
+          *ngFor="let user of followers; trackBy: trackByUserId"
+          class="user-item"
+          (click)="navigateToProfile(user.id)"
+        >
+          <img [src]="user.avatar" [alt]="user.username" class="user-avatar" />
+          <div class="user-info">
+            <div class="user-username">{{ user.username }}</div>
+            <div class="user-email">{{ user.email }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="activeTab === 'following'">
+      <div *ngIf="following.length === 0" class="empty-state">
+        <p>Вы ни на кого не подписаны</p>
+      </div>
+      <div *ngIf="following.length > 0" class="users-list">
+        <div
+          *ngFor="let user of following; trackBy: trackByUserId"
+          class="user-item"
+          (click)="navigateToProfile(user.id)"
+        >
+          <img [src]="user.avatar" [alt]="user.username" class="user-avatar" />
+          <div class="user-info">
+            <div class="user-username">{{ user.username }}</div>
+            <div class="user-email">{{ user.email }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

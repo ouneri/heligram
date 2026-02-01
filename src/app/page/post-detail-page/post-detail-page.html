@@ -1,0 +1,17 @@
+<div class="post-detail-container">
+  <button class="back-btn" (click)="goBack()">← Назад</button>
+
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Загрузка поста...</p>
+  </div>
+
+  <div *ngIf="error && !isLoading" class="error-state">
+    <p>❌ Пост не найден</p>
+    <button class="back-btn-error" (click)="goBack()">Вернуться на главную</button>
+  </div>
+
+  <div *ngIf="!isLoading && !error && post" class="post-wrapper">
+    <app-post [post]="post"></app-post>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import {Router, RouterLink, RouterLinkActive} from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Authservices } from '../../services/authservices';
+import { ThemeService } from '../../services/theme-service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -15,11 +16,13 @@ import { CommonModule } from '@angular/common';
   standalone: true
 })
 export class Sidebar {
-  showLogoutModal = false; 
+  showLogoutModal = false;
   
   constructor(
     private router: Router,
-    private authService: Authservices) {}
+    private authService: Authservices,
+    public themeService: ThemeService
+  ) {}
 
   logout(): void {
     this.showLogoutModal = true;
@@ -32,5 +35,9 @@ export class Sidebar {
 
   cancelLogout(): void {
     this.showLogoutModal = false;
+  }
+
+  toggleTheme(): void {
+    this.themeService.toggleTheme();
   }
 }

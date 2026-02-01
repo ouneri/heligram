@@ -1,9 +1,16 @@
 <div class="post-card" *ngIf="post">
-  <div class="post-header" (click)="navigateToProfile()">
-    <div class="avatar-wrapper">
-      <img [src]="post.avatar" alt="avatar" (error)="$event.target.src='/avatarka.jpg'">
+  <div class="post-header">
+    <div class="post-header-left" (click)="navigateToProfile()">
+      <div class="avatar-wrapper">
+        <img [src]="post.avatar" alt="avatar" (error)="$event.target.src='/avatarka.jpg'">
+      </div>
+      <span class="username">{{ post.username }}</span>
     </div>
-    <span class="username">{{ post.username }}</span>
+    <div class="post-header-actions" *ngIf="isOwnPost()">
+      <button class="edit-post-btn" (click)="openEditModal()" title="Редактировать">
+        ✏️
+      </button>
+    </div>
   </div>
 
   <div class="post-image">
@@ -87,5 +94,55 @@
     </div>
 
     <span class="post-time">{{ getTimeAgo(post.createdAt) }}</span>
+  </div>
+
+  <!-- Модалка редактирования поста -->
+  <div *ngIf="showEditModal" class="edit-modal-overlay" (click)="closeEditModal()">
+    <div class="edit-modal-content" (click)="$event.stopPropagation()">
+      <div class="edit-modal-header">
+        <h2 class="edit-modal-title">Редактировать пост</h2>
+        <button class="edit-modal-close" (click)="closeEditModal()">×</button>
+      </div>
+      <div class="edit-modal-body">
+        <div class="edit-form-group">
+          <label class="edit-form-label">Описание</label>
+          <textarea
+            class="edit-form-textarea"
+            [(ngModel)]="editDescription"
+            placeholder="Описание поста..."
+            rows="4"
+          ></textarea>
+        </div>
+        <div class="edit-form-group">
+          <label class="edit-form-label">Изображение</label>
+          <input
+            type="file"
+            id="edit-image-input"
+            accept="image/*"
+            (change)="handleEditImageInput($event)"
+            class="edit-form-file-input"
+          />
+          <div *ngIf="editImage" class="edit-image-preview">
+            <img [src]="editImage" alt="Превью" />
+          </div>
+          <label for="edit-image-input" class="edit-form-image-btn">
+            Изменить изображение
+          </label>
+        </div>
+      </div>
+      <div class="edit-modal-footer">
+        <button type="button" class="edit-btn-cancel" (click)="closeEditModal()">
+          Отмена
+        </button>
+        <button 
+          type="button" 
+          class="edit-btn-save" 
+          (click)="saveEdit()"
+          [disabled]="isUpdating"
+        >
+          {{ isUpdating ? 'Сохранение...' : 'Сохранить' }}
+        </button>
+      </div>
+    </div>
   </div>
 </div>

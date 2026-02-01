@@ -3,11 +3,12 @@ import { Post } from '../models/post.interface';
 import { Comment } from '../models/comment.interface';
 import { Like } from '../models/like.interface';
 import { HttpClient } from '@angular/common/http';
-import {Observable, of, Subject} from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { Authservices } from './authservices';
+import { environment } from '../../environments/environment';
 
-const API_URL = 'http://localhost:3000';
+const API_URL = environment.apiUrl;
 
 @Injectable({
   providedIn: 'root',
@@ -140,6 +141,55 @@ export class PostService {
       ...post,
       createdAt: new Date().toISOString()
     });
+  }
+
+  getPostById(postId: string | number): Observable<Post> {
+    const currentUser = this.authService.getCurrentUser();
+    const userId = currentUser?.id;
+
+    return this.http.get<Post>(`${API_URL}/posts/${postId}`).pipe(
+      switchMap(post => {
+        return this.http.get<Like[]>(`${API_URL}/likes?postId=${postId}`).pipe(
+          catchError(() => of([])),
+          switchMap(likes => {
+            return this.http.get<Comment[]>(`${API_URL}/comments?postId=${postId}`).pipe(
+              catchError(() => of([])),
+              map(comments => {
+                const isLiked = userId ? likes.some(like => like.userId === userId) : false;
+                return {
+                  ...post,
+                  likes,
+                  comments,
+                  likesCount: likes.length,
+                  commentsCount: comments.length,
+                  isLiked
+                };
+              })
+            );
+          })
+        );
+      }),
+      catchError(error => {
+        console.error('Error loading post:', error);
+        throw error;
+      })
+    );
+  }
+
+  updatePost(postId: string | number, data: { description?: string; image?: string }): Observable<Post> {
+    const currentUser = this.authService.getCurrentUser();
+    if (!currentUser) {
+      throw new Error('User not authenticated');
+    }
+
+    return this.http.get<Post>(`${API_URL}/posts/${postId}`).pipe(
+      switchMap(post => {
+        if (post.userId !== currentUser.id) {
+          throw new Error('Not authorized to update this post');
+        }
+        return this.http.patch<Post>(`${API_URL}/posts/${postId}`, data);
+      })
+    );
   }
 
   deletePost(postId: string | number): Observable<void> {

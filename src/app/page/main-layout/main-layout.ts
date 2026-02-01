@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {Sidebar} from '../../components/sidebar/sidebar';
 import {Rightbar} from '../../components/rightbar/rightbar';
+import {CreatePostModal} from '../../components/create-post-modal/create-post-modal';
 import { Router} from '@angular/router';
 import {NavigationEnd} from '@angular/router';
 import {CommonModule} from '@angular/common';
@@ -11,9 +12,10 @@ import {CommonModule} from '@angular/common';
   selector: 'app-main-layout',
   standalone: true,
   imports: [
-    RouterOutlet,     // Добавляем поддержку роутинга внутри страницы
+    RouterOutlet,
     Sidebar,
     Rightbar,
+    CreatePostModal,
     CommonModule
   ],
   templateUrl: './main-layout.html',

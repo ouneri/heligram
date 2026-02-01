@@ -25,7 +25,12 @@
         >
           {{ isFollowing ? '✓ Подписки' : '+ Подписаться' }}
         </button>
-        <!-- Редактирование профиля будет добавлено позже -->
+        <button *ngIf="isOwnProfile()"
+                (click)="onOpenEditModal()"
+                class="edit-btn">
+          Редактировать
+        </button>
+
       </div>
     </div>
 
@@ -79,5 +84,63 @@
 
   <div *ngIf="!isLoading && !user" class="error-state">
     <p>❌ Пользователь не найден</p>
+  </div>
+
+
+  <div *ngIf="showEditModal" class="edit-modal-overlay" (click)="onCloseEditModal()">
+    <div class="edit-modal-content" (click)="$event.stopPropagation()">
+      <div class="edit-modal-header">
+        <h2 class="edit-modal-title">Редактировать профиль</h2>
+        <button class="edit-modal-close" (click)="onCloseEditModal()">×</button>
+      </div>
+
+      <div class="edit-modal-body">
+        <div class="edit-form-group edit-form-group-avatar">
+          <label class="edit-form-label">Аватар</label>
+          <input
+            type="file"
+            id="avatar-input"
+            accept="image/*"
+            (change)="handlerFileInput($event)"
+            class="edit-form-file-input"
+          />
+          <div *ngIf="editAvatar" class="edit-avatar-preview">
+            <img [src]="editAvatar" alt="Превью" />
+          </div>
+          <label for="avatar-input" class="edit-form-avatar-btn">
+            Изменить аватар
+          </label>
+        </div>
+
+        <div class="edit-form-group">
+          <label class="edit-form-label">Имя пользователя</label>
+          <input
+            type="text"
+            class="edit-form-input"
+            [(ngModel)]="editUsername"
+            placeholder="Введите имя"
+          />
+        </div>
+
+        <div class="edit-form-group">
+          <label class="edit-form-label">О себе</label>
+          <textarea
+            class="edit-form-textarea"
+            [(ngModel)]="editBio"
+            placeholder="Расскажите о себе"
+            rows="4"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="edit-modal-footer">
+        <button type="button" class="edit-btn-cancel" (click)="onCloseEditModal()">
+          Отмена
+        </button>
+        <button type="button" class="edit-btn-save" (click)="onSaveProfile()">
+          Сохранить
+        </button>
+      </div>
+    </div>
   </div>
 </div>

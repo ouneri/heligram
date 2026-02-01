@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {RouterLink, RouterLinkActive} from '@angular/router';
-import { CreatePost } from '../create-post/create-post';
+import { CreatePostButton } from '../create-post-button/create-post-button';
 import {Authservices} from '../../services/authservices';
 import {User} from '../../models/user.interface';
 
@@ -9,7 +9,7 @@ import {User} from '../../models/user.interface';
   imports: [
     RouterLink,
     RouterLinkActive,
-    CreatePost
+    CreatePostButton
   ],
   templateUrl: './rightbar.html',
   styleUrl: './rightbar.scss',
@@ -24,9 +24,6 @@ export class Rightbar {
     private authservices:  Authservices,
   ){
     this.currentUser = this.authservices.getCurrentUser();
-  }
-
-  onPostCreated(): void {
   }
 
 }

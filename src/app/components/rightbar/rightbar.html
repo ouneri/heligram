@@ -7,7 +7,7 @@
 
     <div class="rightbar-menu">
       <nav>
-        <app-create-post (postCreated)="onPostCreated()"></app-create-post>
+        <app-create-post-button></app-create-post-button>
         <a [routerLink]="['/main/profile', currentUser?.id]" routerLinkActive="active" class="nav-item">
           <span>Profile</span>
         </a>

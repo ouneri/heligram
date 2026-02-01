@@ -29,6 +29,11 @@ export class Profilelist implements OnInit {
   postsCount = 0;
   userPosts: Post[] = [];
   currentUser: User | null = null;
+  showEditModal= false;
+  editUsername: string = '';
+  editBio: string = '';
+  editAvatar: string = '';
+
 
   constructor(
     private route: ActivatedRoute,
@@ -39,6 +44,8 @@ export class Profilelist implements OnInit {
     private router: Router,
     private cdr: ChangeDetectorRef
   ) {}
+
+
 
     ngOnInit() {
       this.currentUser = this.authService.getCurrentUser();
@@ -172,4 +179,51 @@ export class Profilelist implements OnInit {
     trackByPostId(index: number, post: Post): string | number {
       return post.id;
     }
-}
+
+    onOpenEditModal() {
+      this.showEditModal = true;
+      this.editUsername = this.user?.username ?? '';
+      this.editBio = this.user?.bio ?? '';
+      this.editAvatar = this.user?.avatar ?? '';
+
+    }
+
+    handlerFileInput(event: Event) {
+      const input = event.target as HTMLInputElement;
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        const reader = new FileReader();
+
+        reader.onload = (e: ProgressEvent<FileReader>) => {
+          if (e.target?.result) {
+            this.editAvatar = e.target.result as string;
+            this.cdr.detectChanges();
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+
+    onCloseEditModal() {
+      this.showEditModal = false;
+    }
+
+    onSaveProfile() {
+      if (!this.userId || !this.user) return;
+
+      this.authService.updateUser(this.userId, { username: this.editUsername, bio: this.editBio, avatar: this.editAvatar}).subscribe({
+        next: (user) => {
+          this.user = user;
+          this.onCloseEditModal();
+          this.cdr.detectChanges();
+          if (this.isOwnProfile()) {
+            this.authService.updateCurrentUser(user);
+          }
+        },
+        error: () => {
+          this.notificationService.error('Ошибка при сохранении');
+        }
+      });
+    }
+  }

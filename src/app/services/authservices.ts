@@ -171,6 +171,8 @@ export class Authservices {
   }
 
 
+
+
   getCurrentUser(): User | null {
 
     return this.currentUser();
@@ -197,5 +199,30 @@ export class Authservices {
           return throwError(() => error);
         })
       );
+  }
+
+  updateCurrentUser(user: User): void {
+    this.currentUser.set(user);
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+
+  updateUser(id: string | number, data: { username?: string; bio?: string; avatar?: string }): Observable<User> {
+    return this.http.patch<any>(`${API_URL}/users/${id}`, data).pipe(
+      map((userData) => {
+        const user: User = {
+          id: userData.id,
+          username: userData.username,
+          email: userData.email,
+          avatar: userData.avatar,
+          bio: userData.bio || '',
+          createdAt: new Date(userData.createdAt)
+        };
+        return user;
+      }),
+      catchError((error) => {
+        console.error('❌ Error in updateUser:', error);
+        return throwError(() => error);
+      })
+    );
   }
 }

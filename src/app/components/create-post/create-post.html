@@ -3,14 +3,14 @@
     <span>CREATE POST</span>
   </button>
 
-  <div *ngIf="showModal" class="modal-overlay" (click)="closeModal()">
-    <div class="modal-content" (click)="$event.stopPropagation()">
-      <div class="modal-header">
-        <h2 class="modal-title">Создать пост</h2>
-        <button class="modal-close" (click)="closeModal()">×</button>
+  <div *ngIf="showModal" class="create-modal-overlay" (click)="closeModal()">
+    <div class="create-modal-content" (click)="$event.stopPropagation()">
+      <div class="create-modal-header">
+        <h2 class="create-modal-title">Создать пост</h2>
+        <button class="create-modal-close" (click)="closeModal()">×</button>
       </div>
 
-      <div class="modal-body">
+      <div class="create-modal-body">
         <div class="form-group">
           <label class="form-label">Описание</label>
           <textarea
@@ -50,12 +50,13 @@
         </div>
       </div>
 
-      <div class="modal-footer">
-        <button class="btn-cancel" (click)="closeModal()" [disabled]="isSubmitting">
+      <div class="create-modal-footer">
+        <button type="button" class="create-btn-cancel" (click)="closeModal()" [disabled]="isSubmitting">
           Отмена
         </button>
         <button
-          class="btn-submit"
+          type="button"
+          class="create-btn-submit"
           (click)="onSubmit()"
           [disabled]="isSubmitting || !description.trim() || !imageUrl.trim()"
         >

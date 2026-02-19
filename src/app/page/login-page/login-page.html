@@ -46,12 +46,13 @@
     </span>
     </div>
 
-    <div>
+    <div class="form-actions">
       <button type="submit"
        class="btnsubmit"
        [disabled]="isLoading || !loginForm.valid"
        >{{isLoading ? 'Вход...' : 'Войти'}}
       </button>
+      <a routerLink="/register" class="btn-register">Зарегистрироваться</a>
     </div>
   </form>
 </div>

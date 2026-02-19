@@ -67,7 +67,28 @@ html, body {
   }
 }
 
+.form-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+}
+
+.btn-register {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: white;
+    text-decoration: underline;
+  }
+}
+
 .btnsubmit {
+  width: 100%;
   background: black;
   color: white;
   border: none;

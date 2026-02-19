@@ -25,9 +25,6 @@
     <a routerLink="/main/heliprem" routerLinkActive="active" class="nav-item">
       <span>HELIPREM</span>
     </a>
-    <button class="nav-item theme-toggle" (click)="toggleTheme()">
-      <span>{{ themeService.theme() === 'dark' ? '☀️ Светлая' : '🌙 Тёмная' }}</span>
-    </button>
     <button id="logout-button" (click)="logout()" class="nav-item">
       <span id="logout-item">Logout</span>
     </button>

@@ -4,17 +4,26 @@
   position: relative;
   max-width: 800px;
   margin: 0 auto;
-  padding: 80px 40px 40px;
+  padding: 70px 80px 80px;
   min-height: calc(100vh - 40px);
+  box-sizing: border-box;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.35) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  animation: fadeIn 0.5s ease-out;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .back-btn {
   position: absolute;
   top: 28px;
-  left: 40px;
+  left: 28px;
   padding: 10px 20px;
   background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 14px;
   color: rgba(255, 255, 255, 0.95);
@@ -22,27 +31,44 @@
   font-weight: 500;
   cursor: pointer;
   text-decoration: none;
-  transition: all 0.25s;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 
   &:hover {
     background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
     transform: translateX(-2px);
   }
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .page-title {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
   color: white;
   margin-bottom: 30px;
   text-align: center;
+  letter-spacing: -0.5px;
 }
 
 .tabs {
   display: flex;
   gap: 10px;
   margin-bottom: 30px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   justify-content: center;
 }
 
@@ -55,7 +81,7 @@
   padding: 12px 24px;
   cursor: pointer;
   border-bottom: 2px solid transparent;
-  transition: all 0.3s;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover {
     color: white;
@@ -63,17 +89,12 @@
 
   &.active {
     color: white;
-    border-bottom-color: white;
+    border-bottom-color: #2D88FF;
   }
 }
 
 .content {
-  animation: fadeIn 0.5s;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  animation: fadeIn 0.5s ease-out;
 }
 
 .loading-state,
@@ -89,7 +110,7 @@
 
   p {
     font-size: 18px;
-    opacity: 0.7;
+    opacity: 0.8;
   }
 }
 
@@ -116,26 +137,32 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 16px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 14px;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
-    transform: translateX(5px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.12);
+    transform: translateX(4px);
   }
 }
 
 .user-avatar {
   width: 56px;
   height: 56px;
+  min-width: 56px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid rgba(255, 255, 255, 0.2);
+  transition: border-color 0.25s ease;
+
+  .user-item:hover & {
+    border-color: rgba(45, 136, 255, 0.5);
+  }
 }
 
 .user-info {
